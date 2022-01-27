@@ -69,6 +69,8 @@ SoundEngine::SoundEngine()
 {
 	memset(m_hx3DAudio, 0, sizeof(m_hx3DAudio));
 	Init();
+
+	g_soundEngine = this;
 }
 SoundEngine::~SoundEngine()
 {

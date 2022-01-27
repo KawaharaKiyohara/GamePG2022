@@ -20,6 +20,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
 
+	//サウンドエンジンを作成する。
+	new SoundEngine;
+
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
 	//////////////////////////////////////
@@ -44,7 +47,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//////////////////////////////////////
 		//絵を描くコードを書くのはここまで！！！
 		//////////////////////////////////////
-		SoundEngine::GetInstance().Update();
+		g_soundEngine->Update();
 		g_engine->EndFrame();
 	}
 	//ゲームオブジェクトマネージャーを削除。
