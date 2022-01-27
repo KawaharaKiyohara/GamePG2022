@@ -29,7 +29,7 @@ void Player::Update()
 	
 	//Hands On 8 キャラクターを動かしてみよう。
 
-		//Hands On 9 キャラクターをジャンプさせて、重力を加えよう。
+	//Hands On 9 キャラクターをジャンプさせて、重力を加えよう。
 
 	//Hands On 7 CharacterControllerを使って、キャラクターを移動させる。
 
