@@ -33,5 +33,4 @@ public:
 	Vector3 moveSpeed;		//移動速度。
 	Quaternion rotation;  //クォータニオン。
 	int playerState = 0;	//プレイヤーのステート(状態)を表す変数。
-	int starCount = 0;	//集めた☆の数をカウントする。
 };

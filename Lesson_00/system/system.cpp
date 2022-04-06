@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "system.h"
-#include "GraphicsEngine.h"
+#include "graphics/GraphicsEngine.h"
+#include "graphics/RenderingEngine.h"
+#include "sound/SoundEngine.h"
 
 HWND			g_hWnd = NULL;				//ウィンドウハンドル。
 
@@ -17,7 +19,6 @@ LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_DESTROY:
 		//スエンジンの破棄。
-		delete g_engine;
 		PostQuitMessage(0);
 		break;	
 	default:
@@ -79,9 +80,13 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 {
 	//ウィンドウを初期化。
 	InitWindow(hInstance, hPrevInstance, lpCmdLine, nCmdShow, appName);
-	//TKエンジンの初期化。
-	g_engine = new TkEngine;
-	g_engine->Init(g_hWnd, FRAME_BUFFER_W, FRAME_BUFFER_H);
+	//k2エンジンの初期化。
+	K2Engine::InitData initData;
+	initData.isSoftShadow = true;
+	initData.frameBufferWidth = FRAME_BUFFER_W;
+	initData.frameBufferHeight = FRAME_BUFFER_H;
+	initData.hwnd = g_hWnd;
+	K2Engine::CreateInstance(initData);
 }
 //ウィンドウメッセージをディスパッチ。falseが返ってきたら、ゲーム終了。
 bool DispatchWindowMessage()

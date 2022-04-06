@@ -1,8 +1,24 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "Player.h"
+
+#include<InitGUID.h>
+#include<dxgidebug.h>
+
 #include "Title.h"
-#include "sound/SoundEngine.h"
+
+void ReportLiveObjects()
+{
+	IDXGIDebug* pDxgiDebug;
+
+	typedef HRESULT(__stdcall* fPtr)(const IID&, void**);
+	HMODULE hDll = GetModuleHandleW(L"dxgidebug.dll");
+	fPtr DXGIGetDebugInterface = (fPtr)GetProcAddress(hDll, "DXGIGetDebugInterface");
+
+	DXGIGetDebugInterface(__uuidof(IDXGIDebug), (void**)&pDxgiDebug);
+
+	// 出力。
+	pDxgiDebug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_DETAIL);
+}
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -11,47 +27,27 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
-
 	//////////////////////////////////////
 	// ここから初期化を行うコードを記述する。
 	//////////////////////////////////////
 
-	//ゲームオブジェクトマネージャーのインスタンスを作成する。
-	GameObjectManager::CreateInstance();
-	PhysicsWorld::CreateInstance();
-	g_soundEngine = new SoundEngine();
-	
-	NewGO<Title>(0,"title");
+	//Titleクラスのオブジェクトを作成。
+	NewGO<Title>(0, "Title");
 
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
 	//////////////////////////////////////
-	auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 	// ここからゲームループ。
 	while (DispatchWindowMessage())
 	{
-		//レンダリング開始。
-		g_engine->BeginFrame();
-		
-
-		//////////////////////////////////////
-		//ここから絵を描くコードを記述する。
-		//////////////////////////////////////
-		
-		//sprite[1].Update(pos[1], Quaternion::Identity, Vector3::One);
-		GameObjectManager::GetInstance()->ExecuteUpdate();
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-		PhysicsWorld::GetInstance()->DebubDrawWorld(renderContext);
-	
-		//////////////////////////////////////
-		//絵を描くコードを書くのはここまで！！！
-		//////////////////////////////////////
-		g_soundEngine->Update();
-		g_engine->EndFrame();
+		K2Engine::GetInstance()->Execute();
 	}
-	//ゲームオブジェクトマネージャーを削除。
-	GameObjectManager::DeleteInstance();
+
+	K2Engine::DeleteInstance();
+
+#ifdef _DEBUG
+	ReportLiveObjects();
+#endif // _DEBUG
 	return 0;
 }
-

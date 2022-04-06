@@ -19,6 +19,8 @@ Game::Game()
 	Star* star = NewGO<Star>(0);
 
 	//Hands On 4 SoundEngineを使って、waveファイル(.wav)を読み込む。
+
+	//Hands On 5 BGMを再生してみよう。
 	
 }
 

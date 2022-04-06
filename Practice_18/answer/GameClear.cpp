@@ -5,7 +5,7 @@
 GameClear::GameClear()
 {
 	//ゲームクリアの画像を読み込む。
-	spriteRender.Init("Assets/sprite/gameclear.dds", 1280.0f, 720.0f);
+	spriteRender.Init("Assets/sprite/gameclear.dds", 1920.0f, 1080.0f);
 }
 
 GameClear::~GameClear()
