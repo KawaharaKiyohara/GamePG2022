@@ -139,9 +139,11 @@ namespace nsK2Engine {
 		UpdateWorldMatrixInModes();
 		
 		// レイトレワールドに追加。
-		g_renderingEngine->AddModelToRaytracingWorld(m_renderToGBufferModel);
-		
-		m_addRaytracingWorldModel = &m_renderToGBufferModel;
+		if (m_isRaytracingWorld) {
+			g_renderingEngine->AddModelToRaytracingWorld(m_renderToGBufferModel);
+
+			m_addRaytracingWorldModel = &m_renderToGBufferModel;
+		}
 	}
 
 	void ModelRender::InitGeometryDatas(int maxInstance)

@@ -203,6 +203,15 @@ namespace nsK2Engine {
 		{
 			m_isShadowCaster = flag;
 		}
+
+		/// <summary>
+		/// レイトレワールドに登録するかのフラグを設定する
+		/// 頻繁に生成するモデル（弾など）をInitする前に引数falseで実行してください。
+		/// </summary>
+		void SetRaytracingWorld(bool flag) {
+			m_isRaytracingWorld = flag;
+		}
+
 		/// <summary>
 		/// アニメーション再生の速度を設定する。
 		/// </summary>
@@ -258,6 +267,7 @@ namespace nsK2Engine {
 		{
 			return m_isEnableInstancingDraw;
 		}
+
 		/// <summary>
 		/// ワールド行列を取得。
 		/// </summary>
@@ -443,6 +453,6 @@ namespace nsK2Engine {
 		StructuredBuffer			m_worldMatrixArraySB;				// ワールド行列の配列のストラクチャードバッファ。
 		std::vector< GemometryData > m_geometryDatas;					// ジオメトリ情報。
 		std::unique_ptr<int[]>		m_instanceNoToWorldMatrixArrayIndexTable;	// インスタンス番号からワールド行列の配列のインデックスに変換するテーブル。
-
+		bool						m_isRaytracingWorld = true;				//レイトレワールドに登録する？
 	};
 }
